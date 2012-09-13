@@ -1,4 +1,11 @@
+UNAME = $(shell uname)
+
+ifeq (${UNAME}, Linux)
+LCFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
+else
 LCFLAGS=-framework sfml-graphics -framework sfml-window -framework sfml-system
+endif
+
 
 kalec: Wall.o WalkableTile.o Map.o Hero.o ImageManager.o
 	g++ -o kalec main.cpp Wall.o WalkableTile.o Map.o Hero.o ImageManager.o ${LCFLAGS}
