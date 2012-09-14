@@ -8,7 +8,9 @@ class WalkableTile: public Tile {
 public:
 	inline bool isWalkable() { return true; }
 
-	WalkableTile();
+	WalkableTile(unsigned image) : Tile(image) {}
+
+private:
 
 };
 

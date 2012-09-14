@@ -4,13 +4,21 @@
 #include <SFML/Graphics.hpp>
 
 #include "Entity.hpp"
+#include "Collision.hpp"
 
 class Hero : public Entity {
 
 public:
-	Hero(unsigned int pvMax);
+	Hero(unsigned int pvMax, float vx, Collision* _collision, sf::RenderWindow* app);
 
-	void act();
+	virtual void act(float elapsedTime);
+
+private:
+	sf::RenderWindow* _app;
+
+	Collision* _collision;
+
+	static bool isInstanciated;
 
 };
 

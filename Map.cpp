@@ -1,19 +1,24 @@
 #include <iostream>
+#include <cassert>
 #include <SFML/Graphics.hpp>
 
 #include "Map.hpp"
 #include "WalkableTile.hpp"
 #include "Wall.hpp"
+#include "ImageManager.hpp"
 
 void Map::load(std::istream& in) {
 	std::cout << "Loading map" << std::endl;
 
+	unsigned grass = ImageManager::loadImage("grass.png");
+	unsigned wall = ImageManager::loadImage("wall.png");
+
 	unsigned int width;
 	unsigned int height;
 	in >> width;
-	//assert(width > 0);
+	assert(width > 0);
 	in >> height;
-	//assert(height > 0);
+	assert(height > 0);
 
 	std::cout << "width: " << width << ", height: " << height << std::endl;
 
@@ -26,12 +31,12 @@ void Map::load(std::istream& in) {
 			int tileId;
 			in >> tileId;
 			if(tileId == 0)
-				row.push_back(new WalkableTile());
+				row.push_back(new WalkableTile(grass));
 			else
-				row.push_back(new Wall());
+				row.push_back(new Wall(wall));
 			row.back()->SetX(j*32);
 			row.back()->SetY(i*32);
-			//assert row[j] == 
+			assert(row[j] == row.back());
 		}
 		map.push_back(row);
 	}
@@ -44,4 +49,21 @@ void Map::render(sf::RenderWindow& app) {
 			app.Draw(*map[i][j]);
 		}
 	}
+}
+
+Tile*& Map::tile(unsigned int i, unsigned int j) {
+	assert(i < map.size());
+	assert(j < map[i].size());
+	return map[i][j];
+}
+
+Tile*& Map::tileFromPixal(float x, float y) {
+	assert(x >= 0);
+	assert(y >= 0);
+  unsigned int xi = int(x/32.);
+  unsigned int yi = int(y/32.);
+	assert(xi < map.size());
+	assert(yi < map[xi].size());
+	//std::cout << "xi: " << xi << ", yi: " << yi << std::endl;
+	return map[yi][xi];
 }

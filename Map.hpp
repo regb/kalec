@@ -9,9 +9,8 @@
 class Map {
 
 public:
-  inline Tile*& tile(unsigned int i, unsigned int j) {
-    return map[i][j];
-  }
+  Tile*& tile(unsigned int i, unsigned int j);
+	Tile*& tileFromPixal(float x, float y);
 
 	Map() {}
 

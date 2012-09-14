@@ -3,16 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Globals.hpp"
-
 #include "Entity.hpp"
 #include "Hero.hpp"
 #include "Map.hpp"
 #include "Tile.hpp"
+#include "ImageManager.hpp"
+#include "Collision.hpp"
 
-ImageManager imageManager;
-Hero hero(100);
-Map map;
 
 int main() {
 
@@ -20,22 +17,42 @@ int main() {
 	Map map;
 	map.load(mapFile);
 
-  sf::RenderWindow App(sf::VideoMode(640, 480), "SFML Graphics");
 
+	sf::Clock clock;
+
+  sf::RenderWindow app(sf::VideoMode(640, 480), "SFML Graphics");
+
+	Collision collision(&map);
+
+	Hero hero(100, 50, &collision, &app);
+
+
+	app.UseVerticalSync(false);
   
-  while(App.IsOpened()) {
+  while(app.IsOpened()) {
+
+		float elapsedTime = clock.GetElapsedTime();
+		clock.Reset();
+
+		//float framerate = 1.f/elapsedTime;
+		//std::cout << "fps: " << framerate << std::endl;
+
     sf::Event Event;
-    while(App.GetEvent(Event)) {
+    while(app.GetEvent(Event)) {
       if(Event.Type == sf::Event::Closed)
-        App.Close();
+        app.Close();
+			else if(Event.Type == sf::Event::KeyPressed && Event.Key.Code == sf::Key::Space)
+				hero.jump();
     }
     
-    App.Clear(sf::Color(200, 0, 0));
+    app.Clear(sf::Color(200, 0, 0));
 
+		hero.act(elapsedTime);
 
-		map.render(App);
+		map.render(app);
+		app.Draw(hero);
 
-    App.Display();
+    app.Display();
   }
   
   return EXIT_SUCCESS;

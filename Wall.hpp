@@ -8,7 +8,7 @@ class Wall : public Tile {
 public:
 	inline bool isWalkable() { return false; }
 
-	Wall();
+	Wall(unsigned image) : Tile(image) {}
 
 };
 

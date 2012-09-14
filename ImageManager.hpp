@@ -1,26 +1,20 @@
 #ifndef _IMAGEMANAGER_
 #define _IMAGEMANAGER_
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 
 class ImageManager {
 
 public:
 
-	ImageManager();
+	static sf::Image& getImage(unsigned id); 
 
-	inline sf::Image& getWall() {
-		return _wall;
-	}
-	inline sf::Image& getGrass() {
-		return _grass;
-	}
-
+	static unsigned loadImage(const std::string& filename);
 
 private:
 
-	sf::Image _wall;
-	sf::Image _grass;
+	static std::vector<sf::Image> images;
 
 };
 
