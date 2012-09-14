@@ -7,10 +7,11 @@ class Entity : public sf::Sprite {
 
 public:
 
-	Entity(unsigned int pvMax, float vx) : sf::Sprite(), _pvMax(pvMax), _pv(pvMax), _vx(vx), _vy(0), _air(false) {}
+	Entity(unsigned int pvMax, float vx);
 
 	virtual void act(float elapsedTime) = 0;
 	void jump();
+	void fall();
   void land();
 
   inline bool air() {

@@ -38,3 +38,6 @@ ImageManager.o: ImageManager.cpp ImageManager.hpp
 
 Collision.o: Collision.cpp Collision.hpp
 	g++ -Wall -c Collision.cpp
+
+Entity.o: Entity.cpp Entity.hpp
+	g++ -Wall -c Entity.cpp
