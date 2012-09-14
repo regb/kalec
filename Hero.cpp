@@ -30,7 +30,7 @@ void Hero::act(float elapsedTime) {
 		_vy += 50*elapsedTime;
 }
 
-Hero::Hero(unsigned int pvMax, float vx, Collision* collision, sf::RenderWindow* app) : Entity(pvMax, vx), _app(app), _collision(collision){
+Hero::Hero(unsigned int pvMax, float vx, Collision* collision, sf::RenderWindow* app) : Entity(pvMax, vx), _app(app), _collision(collision) {
 	if(isInstanciated)
 		exit(-1);
 	isInstanciated = true;

@@ -1,7 +1,7 @@
 #include <cassert>
 #include <iostream>
 
-#include "Collision.hpp";
+#include "Collision.hpp"
 
 bool Collision::collide(sf::Sprite& obj, float dx, float dy, bool& floor) {
 
