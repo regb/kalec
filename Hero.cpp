@@ -24,10 +24,13 @@ void Hero::act(float elapsedTime) {
 	if(!_collision->collide(*this, dx, dy, floor))
 		Move(dx, dy);
 
-	if(floor)
-		_vy = 0;
-	else
-		_vy += 50*elapsedTime;
+  if(air()) {
+    if(floor)
+      land();
+    else
+      _vy += 50*elapsedTime;
+  }
+
 }
 
 Hero::Hero(unsigned int pvMax, float vx, Collision* collision, sf::RenderWindow* app) : Entity(pvMax, vx), _app(app), _collision(collision) {
