@@ -54,8 +54,8 @@ bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& re
 
 		float newY = forwardY + dy;
 
-		Tile* leftTileY = _map->tileFromPixel(objPosX, newY);
-		Tile* rightTileY = _map->tileFromPixel(objPosX + obj.GetSize().x, newY);
+		Tile* leftTileY = _map->tileFromPixel(objPosX + 1.f, newY);
+		Tile* rightTileY = _map->tileFromPixel(objPosX + obj.GetSize().x - 1.f, newY);
 
 		if(!leftTileY->isWalkable() || !rightTileY->isWalkable()) {
 			result.floor = true;
