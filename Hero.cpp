@@ -24,6 +24,15 @@ void Hero::act(float elapsedTime) {
 	if(input.IsKeyDown(sf::Key::Right))
 		_vx = _vx + 100.f*elapsedTime;
 
+	float friction = 60.f*elapsedTime;
+	if(_vx < friction && _vx > -friction)
+		_vx = 0.f;
+	if(_vx > 0)
+		_vx = _vx - friction;
+	else
+		_vx = _vx + friction;
+
+
 	float dx = _vx*elapsedTime;
 	float dy = _vy*elapsedTime;
 
@@ -35,7 +44,7 @@ void Hero::act(float elapsedTime) {
 		Move(colRes.dx, colRes.dy);
 		if(colRes.floor)
 			_vy = 0.f;
-		else if(colRes.side)
+		if(colRes.side)
 			_vx = 0.f;
 	}
 
