@@ -49,7 +49,7 @@ bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& re
 
 		assert(left  || result.dx <= dx);
 		assert(!left || result.dx >= dx);
-		assert(result.dx * dx >= 0); //same direction
+		//assert(result.dx * dx >= 0); //same direction
 	}
 
 	float objPosX = obj.GetPosition().x + result.dx;
@@ -82,7 +82,7 @@ bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& re
 		std::cout << "res.dy=" << result.dy << std::endl;
 		assert(down  || result.dy >= dy);
 		assert(!down || result.dy <= dy);
-		assert(result.dy * dy >= 0); //same direction
+		//assert(result.dy * dy >= 0); //same direction
 	}
 
 	return result.floor || result.ceil || result.left || result.right;
