@@ -38,12 +38,15 @@ void Hero::act(float elapsedTime) {
 	} else {
 	  friction = 60.f*elapsedTime;
 	}
-	if(_vx < friction && _vx > -friction)
+
+	if(_vx <= friction && _vx >= -friction) {
 		_vx = 0.f;
-	if(_vx > 0)
-		_vx = _vx - friction;
-	else
-		_vx = _vx + friction;
+	} else {
+		if(_vx > 0)
+			_vx = _vx - friction;
+		else
+			_vx = _vx + friction;
+	}
 
 
 	float dx = _vx*elapsedTime;

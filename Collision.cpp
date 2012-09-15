@@ -5,6 +5,10 @@
 #include "constants.hpp"
 
 bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& result) {
+	//assert(_map->tileFromPixel(obj.GetPosition().x, obj.GetPosition().y)->isWalkable());
+	//assert(_map->tileFromPixel(obj.GetPosition().x + obj.GetSize().x, obj.GetPosition().y)->isWalkable());
+	std::cout << "posx: " << obj.GetPosition().x << std::endl;
+	std::cout << "posy: " << obj.GetPosition().y << std::endl;
 	std::cout << "dx: " << dx << std::endl;
 	std::cout << "dy: " << dy << std::endl;
 
@@ -25,24 +29,27 @@ bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& re
 		else
 			forwardX = obj.GetPosition().x + obj.GetSize().x;
 		float newX = forwardX + dx;
+		float topY = obj.GetPosition().y + constants::COLLISION_MARGIN;
+		float botY = obj.GetPosition().y + obj.GetSize().y - constants::COLLISION_MARGIN;
+		Tile* topTile = _map->tileFromPixel(newX, topY);
+		Tile* botTile = _map->tileFromPixel(newX, botY);
 
-		Tile* topTileX = _map->tileFromPixel(newX, obj.GetPosition().y + 1.f);
-		Tile* botTileX = _map->tileFromPixel(newX, obj.GetPosition().y + obj.GetSize().y - 1.f);
-
-		if(!topTileX->isWalkable() || !botTileX->isWalkable()) {
+		if(!topTile->isWalkable() || !botTile->isWalkable()) {
 			result.left = left;
 			result.right = !left;
 			float limit;
 			if(left)
-				limit = topTileX->GetPosition().x + topTileX->GetSize().x;
+				limit = topTile->GetPosition().x + topTile->GetSize().x;
 			else
-				limit = topTileX->GetPosition().x;
+				limit = topTile->GetPosition().x;
 
 			result.dx = limit - forwardX;
 		}
+		std::cout << "res.dx=" << result.dx << std::endl;
 
 		assert(left  || result.dx <= dx);
 		assert(!left || result.dx >= dx);
+		assert(result.dx * dx >= 0); //same direction
 	}
 
 	float objPosX = obj.GetPosition().x + result.dx;
@@ -57,8 +64,8 @@ bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& re
 
 		float newY = forwardY + dy;
 
-		Tile* leftTileY = _map->tileFromPixel(objPosX + 1.f, newY);
-		Tile* rightTileY = _map->tileFromPixel(objPosX + obj.GetSize().x - 1.f, newY);
+		Tile* leftTileY = _map->tileFromPixel(objPosX + constants::COLLISION_MARGIN, newY);
+		Tile* rightTileY = _map->tileFromPixel(objPosX + obj.GetSize().x - constants::COLLISION_MARGIN, newY);
 
 		if(!leftTileY->isWalkable() || !rightTileY->isWalkable()) {
 			result.floor = down;
@@ -72,8 +79,10 @@ bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& re
 			result.dy = limit - forwardY;
 		}
 
+		std::cout << "res.dy=" << result.dy << std::endl;
 		assert(down  || result.dy >= dy);
 		assert(!down || result.dy <= dy);
+		assert(result.dy * dy >= 0); //same direction
 	}
 
 	return result.floor || result.ceil || result.left || result.right;

@@ -3,7 +3,7 @@
 
 namespace constants {
 	const float GRAVITY = 200.f;
-	const float COLLISION_MARGIN = 0.05f;
+	const float COLLISION_MARGIN = 0.001f;
 }
 
 #endif
