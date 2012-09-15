@@ -12,8 +12,10 @@ void Hero::act(float elapsedTime) {
 
 	//jump
 	if(input.IsKeyDown(sf::Key::Up)) {
-		if(_vy == 0.f)
+		if(!_air) {
 			_vy = -200.f;
+			_air = true;
+		}
 	}
 
 	//apply forces
@@ -24,7 +26,12 @@ void Hero::act(float elapsedTime) {
 	if(input.IsKeyDown(sf::Key::Right))
 		_vx = _vx + 100.f*elapsedTime;
 
-	float friction = 60.f*elapsedTime;
+	float friction;
+	if(_air) {
+	  friction = 0.f;
+	} else {
+	  friction = 60.f*elapsedTime;
+	}
 	if(_vx < friction && _vx > -friction)
 		_vx = 0.f;
 	if(_vx > 0)
@@ -39,13 +46,20 @@ void Hero::act(float elapsedTime) {
 	CollisionResult colRes;
 	if(!_collision->collide(*this, dx, dy, colRes)) {
 		Move(dx, dy);
+		_air = true;
 	} else {
 		std::cout << "collision!, dx=" << colRes.dx << ", dy=" << colRes.dy << std::endl;
 		Move(colRes.dx, colRes.dy);
-		if(colRes.floor)
+		if(colRes.floor) {
 			_vy = 0.f;
-		if(colRes.side)
+			_air = false;
+		}
+		if(colRes.ceil) {
+			_vy = 0.f;
+		}
+		if(colRes.left || colRes.right) {
 			_vx = 0.f;
+		}
 	}
 
 }

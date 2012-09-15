@@ -41,8 +41,8 @@ int main() {
     while(app.GetEvent(Event)) {
       if(Event.Type == sf::Event::Closed)
         app.Close();
-			else if(Event.Type == sf::Event::KeyPressed && Event.Key.Code == sf::Key::Space)
-				hero.jump();
+			//else if(Event.Type == sf::Event::KeyPressed && Event.Key.Code == sf::Key::Space)
+			//	hero.jump();
     }
     
     app.Clear(sf::Color(200, 0, 0));

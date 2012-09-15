@@ -8,7 +8,9 @@ struct CollisionResult {
 	float dx;
 	float dy;
 	bool floor;
-	bool side;
+	bool ceil;
+	bool left;
+	bool right;
 };
 
 class Collision {
