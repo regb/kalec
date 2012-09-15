@@ -24,8 +24,8 @@ bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& re
 			forwardX = obj.GetPosition().x + obj.GetSize().x;
 		float newX = forwardX + dx;
 
-		Tile* topTileX = _map->tileFromPixel(newX, obj.GetPosition().y);
-		Tile* botTileX = _map->tileFromPixel(newX, obj.GetPosition().y + obj.GetSize().y);
+		Tile* topTileX = _map->tileFromPixel(newX, obj.GetPosition().y + 1.f);
+		Tile* botTileX = _map->tileFromPixel(newX, obj.GetPosition().y + obj.GetSize().y - 1.f);
 
 		if(!topTileX->isWalkable() || !botTileX->isWalkable()) {
 			result.side = true;
@@ -61,9 +61,9 @@ bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& re
 			result.floor = true;
 			float limit;
 			if(down)
-				limit = leftTileY->GetPosition().y - constants::COLLISION_MARGIN;
+				limit = leftTileY->GetPosition().y;// - constants::COLLISION_MARGIN;
 			else
-				limit = leftTileY->GetPosition().y + leftTileY->GetSize().y + constants::COLLISION_MARGIN;
+				limit = leftTileY->GetPosition().y + leftTileY->GetSize().y;// + constants::COLLISION_MARGIN;
 
 			result.dy = limit - forwardY;
 		}
