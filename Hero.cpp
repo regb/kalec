@@ -11,9 +11,15 @@ void Hero::act(float elapsedTime) {
 	const sf::Input& input = _app->GetInput();
 
 	//jump
+	float jumpCutoff = -120.f;
 	if(input.IsKeyDown(sf::Key::Up)) {
 		if(!_air) {
-			_vy = -200.f;
+			_vy = -250.f;
+			_air = true;
+		}
+	} else {
+		if(_vy < jumpCutoff) {
+			_vy = jumpCutoff;
 			_air = true;
 		}
 	}
