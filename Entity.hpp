@@ -7,7 +7,7 @@ class Entity : public sf::Sprite {
 
 public:
 
-	Entity(unsigned int pvMax, float vx);
+	Entity(unsigned int pvMax);
 
 	virtual void act(float elapsedTime) = 0;
 	void jump();

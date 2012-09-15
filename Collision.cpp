@@ -2,33 +2,75 @@
 #include <iostream>
 
 #include "Collision.hpp"
+#include "constants.hpp"
 
-bool Collision::collide(sf::Sprite& obj, float dx, float dy, bool& floor) {
+bool Collision::collide(sf::Sprite& obj, float dx, float dy, CollisionResult& result) {
+	std::cout << "dx: " << dx << std::endl;
+	std::cout << "dy: " << dy << std::endl;
 
-	float topLeftX = obj.GetPosition().x + dx;
-	float topLeftY = obj.GetPosition().y + dy;
+	result.side = false;
+	result.floor = false;
+	result.dx = dx;
+	result.dy = dy;
+	
+	if(dx != 0.f) { //if moving horizontal
 
-	float topRightX = obj.GetPosition().x + obj.GetSize().x + dx;
-	float topRightY = obj.GetPosition().y + dy;
+		bool left = dx < 0;
 
-	float botLeftX = obj.GetPosition().x + dx;
-	float botLeftY = obj.GetPosition().y + obj.GetSize().y + dy;
+		float forwardX;
+		if(left)
+			forwardX = obj.GetPosition().x;
+		else
+			forwardX = obj.GetPosition().x + obj.GetSize().x;
+		float newX = forwardX + dx;
 
-	float botRightX = obj.GetPosition().x + obj.GetSize().x + dx;
-	float botRightY = obj.GetPosition().y + obj.GetSize().y + dy;
+		Tile* topTileX = _map->tileFromPixel(newX, obj.GetPosition().y);
+		Tile* botTileX = _map->tileFromPixel(newX, obj.GetPosition().y + obj.GetSize().y);
 
-	Tile* topLeft = _map->tileFromPixal(topLeftX, topLeftY);
-	Tile* topRight = _map->tileFromPixal(topRightX, topRightY);
-	Tile* botLeft = _map->tileFromPixal(botLeftX, botLeftY);
-	Tile* botRight = _map->tileFromPixal(botRightX, botRightY);
+		if(!topTileX->isWalkable() || !botTileX->isWalkable()) {
+			result.side = true;
+			float limit;
+			if(left)
+				limit = topTileX->GetPosition().x + topTileX->GetSize().x;
+			else
+				limit = topTileX->GetPosition().x;
 
-	if(!botLeft->isWalkable() || !botRight->isWalkable())
-		floor = true;
-	else
-		floor = false;
+			result.dx = limit - forwardX;
+		}
 
-	assert(topLeft && topRight && botLeft && botRight);
+		assert(left  || result.dx <= dx);
+		assert(!left || result.dx >= dx);
+	}
 
-	return floor || !topLeft->isWalkable() || !topRight->isWalkable();
+	float objPosX = obj.GetPosition().x + result.dx;
+	if(dy != 0.f) { //if moving vertically
+		bool down = dy > 0;
 
+		float forwardY;
+		if(down)
+			forwardY = obj.GetPosition().y + obj.GetSize().y;
+		else
+			forwardY = obj.GetPosition().y;
+
+		float newY = forwardY + dy;
+
+		Tile* leftTileY = _map->tileFromPixel(objPosX, newY);
+		Tile* rightTileY = _map->tileFromPixel(objPosX + obj.GetSize().x, newY);
+
+		if(!leftTileY->isWalkable() || !rightTileY->isWalkable()) {
+			result.floor = true;
+			float limit;
+			if(down)
+				limit = leftTileY->GetPosition().y - constants::COLLISION_MARGIN;
+			else
+				limit = leftTileY->GetPosition().y + leftTileY->GetSize().y + constants::COLLISION_MARGIN;
+
+			result.dy = limit - forwardY;
+		}
+
+		assert(down  || result.dy >= dy);
+		assert(!down || result.dy <= dy);
+	}
+
+	return result.floor || result.side;
 }

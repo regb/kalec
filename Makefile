@@ -16,7 +16,7 @@ WalkableTile.hpp: Tile.hpp
 Wall.hpp: Tile.hpp
 Tile.hpp: ImageManager.hpp
 main.hpp: Entity.hpp Hero.hpp Map.hpp Tile.hpp ImageManager.hpp
-Collision.hpp: Map.hpp Tile.hpp
+Collision.hpp: Map.hpp Tile.hpp Constants.hpp
 
 Wall.o: Wall.cpp Wall.hpp
 	g++ -Wall -c Wall.cpp
@@ -27,7 +27,7 @@ WalkableTile.o: WalkableTile.cpp WalkableTile.hpp
 Map.o: Map.cpp Map.hpp 
 	g++ -Wall -c Map.cpp
 
-Hero.o: Hero.cpp Hero.hpp
+Hero.o: Hero.cpp Hero.hpp constants.hpp
 	g++ -Wall -c Hero.cpp
 
 Tile.o: Tile.cpp Tile.hpp
@@ -41,3 +41,6 @@ Collision.o: Collision.cpp Collision.hpp
 
 Entity.o: Entity.cpp Entity.hpp
 	g++ -Wall -c Entity.cpp
+
+clean:
+	rm *.o

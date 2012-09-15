@@ -24,7 +24,7 @@ int main() {
 
 	Collision collision(&map);
 
-	Hero hero(100, 50, &collision, &app);
+	Hero hero(100, &collision, &app);
 
 
 	app.UseVerticalSync(false);

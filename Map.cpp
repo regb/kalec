@@ -57,13 +57,16 @@ Tile*& Map::tile(unsigned int i, unsigned int j) {
 	return map[i][j];
 }
 
-Tile*& Map::tileFromPixal(float x, float y) {
+//let's just assume that if 32 ~| x then it could return any of the two tile
+Tile*& Map::tileFromPixel(float x, float y) {
 	assert(x >= 0);
 	assert(y >= 0);
-  unsigned int xi = int(x/32.);
-  unsigned int yi = int(y/32.);
+  unsigned int xi = int(x/32.f);
+  unsigned int yi = int(y/32.f);
 	assert(xi < map.size());
 	assert(yi < map[xi].size());
+	//std::cout << "tileFromPixel\n";
+	//std::cout << "x: " << x << ", y: " << y << std::endl;
 	//std::cout << "xi: " << xi << ", yi: " << yi << std::endl;
 	return map[yi][xi];
 }

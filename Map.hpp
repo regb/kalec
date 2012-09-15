@@ -10,7 +10,7 @@ class Map {
 
 public:
   Tile*& tile(unsigned int i, unsigned int j);
-	Tile*& tileFromPixal(float x, float y);
+	Tile*& tileFromPixel(float x, float y);
 
 	Map() {}
 

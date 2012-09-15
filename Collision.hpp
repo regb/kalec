@@ -4,13 +4,20 @@
 #include "Map.hpp"
 #include "Tile.hpp"
 
+struct CollisionResult {
+	float dx;
+	float dy;
+	bool floor;
+	bool side;
+};
+
 class Collision {
 
 public:
 
 	Collision(Map* map) : _map(map) {}
 
-	bool collide(sf::Sprite& obj, float dx, float dy, bool& floor);
+	bool collide(sf::Sprite& obj, float dx, float dy, CollisionResult& result);
 
 
 private:

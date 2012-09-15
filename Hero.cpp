@@ -3,37 +3,45 @@
 
 #include <SFML/Graphics.hpp>
 #include "ImageManager.hpp"
+#include "constants.hpp"
 
 bool Hero::isInstanciated = false;
 
 void Hero::act(float elapsedTime) {
-	float dx=0, dy=0;
 	const sf::Input& input = _app->GetInput();
+
+	//jump
+	if(input.IsKeyDown(sf::Key::Up)) {
+		if(_vy == 0.f)
+			_vy = -200.f;
+	}
+
+	//apply forces
+	_vy = _vy + constants::GRAVITY*elapsedTime;
+
 	if(input.IsKeyDown(sf::Key::Left))
-		dx = -_vx * elapsedTime;
+		_vx = _vx + -100.f*elapsedTime;
 	if(input.IsKeyDown(sf::Key::Right))
-		dx = _vx * elapsedTime;
-	if(input.IsKeyDown(sf::Key::Up))
-		dy = -50 * elapsedTime;
-	if(input.IsKeyDown(sf::Key::Down))
-		dy = 50 * elapsedTime;
+		_vx = _vx + 100.f*elapsedTime;
 
-	dy += _vy*elapsedTime;
+	float dx = _vx*elapsedTime;
+	float dy = _vy*elapsedTime;
 
-	bool floor;
-	if(!_collision->collide(*this, dx, dy, floor))
+	CollisionResult colRes;
+	if(!_collision->collide(*this, dx, dy, colRes)) {
 		Move(dx, dy);
-
-  if(air()) {
-    if(floor)
-      land();
-    else
-      _vy += 50*elapsedTime;
-  }
+	} else {
+		std::cout << "collision!, dx=" << colRes.dx << ", dy=" << colRes.dy << std::endl;
+		Move(colRes.dx, colRes.dy);
+		if(colRes.floor)
+			_vy = 0.f;
+		else if(colRes.side)
+			_vx = 0.f;
+	}
 
 }
 
-Hero::Hero(unsigned int pvMax, float vx, Collision* collision, sf::RenderWindow* app) : Entity(pvMax, vx), _app(app), _collision(collision) {
+Hero::Hero(unsigned int pvMax, Collision* collision, sf::RenderWindow* app) : Entity(pvMax), _app(app), _collision(collision) {
 	if(isInstanciated)
 		exit(-1);
 	isInstanciated = true;

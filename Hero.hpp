@@ -9,7 +9,7 @@
 class Hero : public Entity {
 
 public:
-	Hero(unsigned int pvMax, float vx, Collision* _collision, sf::RenderWindow* app);
+	Hero(unsigned int pvMax, Collision* _collision, sf::RenderWindow* app);
 
 	virtual void act(float elapsedTime);
 
