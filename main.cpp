@@ -9,6 +9,7 @@
 #include "Tile.hpp"
 #include "ImageManager.hpp"
 #include "Collision.hpp"
+#include "constants.hpp"
 
 
 int main() {
@@ -20,7 +21,9 @@ int main() {
 
 	sf::Clock clock;
 
-  sf::RenderWindow app(sf::VideoMode(640, 480), "SFML Graphics");
+  sf::RenderWindow app(sf::VideoMode(
+		constants::WINDOW_WIDTH*constants::TILE_WIDTH, constants::WINDOW_HEIGHT*constants::TILE_HEIGHT),
+		"SFML Graphics");
 
 	Collision collision(&map);
 
@@ -28,6 +31,9 @@ int main() {
 
 
 	app.UseVerticalSync(false);
+
+	sf::View view(map.window());
+	app.SetView(view);
   
   while(app.IsOpened()) {
 
@@ -50,6 +56,10 @@ int main() {
 		hero.act(elapsedTime);
 
 		map.render(app);
+
+		map.setWidowCenter(hero.GetPosition().x + hero.GetSize().x/2, hero.GetPosition().y + hero.GetSize().y/2);
+		app.SetView(sf::View(map.window()));
+
 		app.Draw(hero);
 
     app.Display();

@@ -11,7 +11,7 @@ kalec: main.cpp Wall.o WalkableTile.o Map.o Hero.o ImageManager.o Tile.o Entity.
 	g++ -Wall -o kalec main.cpp ImageManager.o Wall.o WalkableTile.o Map.o Hero.o Tile.o Entity.o Collision.o ${LCFLAGS}
 
 Hero.hpp: Entity.hpp Collision.hpp
-Map.hpp: Tile.hpp Entity.hpp ImageManager.hpp Wall.hpp WalkableTile.hpp
+Map.hpp: Tile.hpp Entity.hpp ImageManager.hpp Wall.hpp WalkableTile.hpp constants.hpp
 WalkableTile.hpp: Tile.hpp
 Wall.hpp: Tile.hpp
 Tile.hpp: ImageManager.hpp
