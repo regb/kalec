@@ -2,7 +2,8 @@
 #define _CONSTANTS_
 
 namespace constants {
-	const float GRAVITY = 200.f;
+	const float GRAVITY = 400.f;
+	const float AIR_FRICTION = 100.f;
 	const float COLLISION_MARGIN = 0.001f;
 	const unsigned TILE_WIDTH = 32;
 	const unsigned TILE_HEIGHT = 32;

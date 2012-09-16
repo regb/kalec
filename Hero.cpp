@@ -11,10 +11,10 @@ void Hero::act(float elapsedTime) {
 	const sf::Input& input = _app->GetInput();
 
 	//jump
-	float jumpCutoff = -120.f;
+	float jumpCutoff = -150.f;
 	if(input.IsKeyDown(sf::Key::Up)) {
 		if(!_air) {
-			_vy = -250.f;
+			_vy = -350.f;
 			_air = true;
 		}
 	} else {
@@ -28,15 +28,15 @@ void Hero::act(float elapsedTime) {
 	_vy = _vy + constants::GRAVITY*elapsedTime;
 
 	if(input.IsKeyDown(sf::Key::Left))
-		_vx = _vx + -100.f*elapsedTime;
+		_vx = _vx + -350.f*elapsedTime;
 	if(input.IsKeyDown(sf::Key::Right))
-		_vx = _vx + 100.f*elapsedTime;
+		_vx = _vx + 350.f*elapsedTime;
 
 	float friction;
 	if(_air) {
-	  friction = 0.f;
+	  friction = constants::AIR_FRICTION*elapsedTime;
 	} else {
-	  friction = 60.f*elapsedTime;
+	  friction = 220.f*elapsedTime;
 	}
 
 	if(_vx <= friction && _vx >= -friction) {
