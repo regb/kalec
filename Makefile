@@ -1,22 +1,24 @@
 UNAME = $(shell uname)
 
-ifeq (${UNAME}, Linux)
+ifeq ($(UNAME), Linux)
 LCFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
-else
+else ifeq ($(UNAME), Darwin)
 LCFLAGS=-framework sfml-graphics -framework sfml-window -framework sfml-system
 endif
 
+OBJS = main.o Wall.o WalkableTile.o Map.o Hero.o ImageManager.o Tile.o Entity.o Collision.o
 
-kalec: main.cpp Wall.o WalkableTile.o Map.o Hero.o ImageManager.o Tile.o Entity.o Collision.o
-	g++ -Wall -o kalec main.cpp ImageManager.o Wall.o WalkableTile.o Map.o Hero.o Tile.o Entity.o Collision.o ${LCFLAGS}
+.DEFAULT_GOAL = kalec
 
 Hero.hpp: Entity.hpp Collision.hpp
 Map.hpp: Tile.hpp Entity.hpp ImageManager.hpp Wall.hpp WalkableTile.hpp constants.hpp
 WalkableTile.hpp: Tile.hpp
 Wall.hpp: Tile.hpp
 Tile.hpp: ImageManager.hpp
-main.hpp: Entity.hpp Hero.hpp Map.hpp Tile.hpp ImageManager.hpp
 Collision.hpp: Map.hpp Tile.hpp constants.hpp
+
+main.o: main.cpp Entity.hpp Hero.hpp Map.hpp Tile.hpp ImageManager.hpp
+	g++ -Wall -c main.cpp
 
 Wall.o: Wall.cpp Wall.hpp
 	g++ -Wall -c Wall.cpp
@@ -42,5 +44,9 @@ Collision.o: Collision.cpp Collision.hpp
 Entity.o: Entity.cpp Entity.hpp
 	g++ -Wall -c Entity.cpp
 
+kalec: main.cpp $(OBJS)
+	g++ $(LCFLAGS) -Wall -o kalec $(OBJS) 
+
+.PHONY: clean
 clean:
 	rm *.o
