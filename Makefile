@@ -49,4 +49,4 @@ kalec: main.cpp $(OBJS)
 
 .PHONY: clean
 clean:
-	rm *.o
+	rm kalec $(OBJS)
