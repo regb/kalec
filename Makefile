@@ -10,6 +10,9 @@ OBJS = main.o Wall.o WalkableTile.o Map.o Hero.o ImageManager.o Tile.o Entity.o 
 
 .DEFAULT_GOAL = kalec
 
+#Just in case .DEFAULT_GOAL is not supported
+all: kalec
+
 Hero.hpp: Entity.hpp Collision.hpp
 Map.hpp: Tile.hpp Entity.hpp ImageManager.hpp Wall.hpp WalkableTile.hpp constants.hpp
 WalkableTile.hpp: Tile.hpp
@@ -19,31 +22,24 @@ Collision.hpp: Map.hpp Tile.hpp constants.hpp
 
 main.o: main.cpp Entity.hpp Hero.hpp Map.hpp Tile.hpp ImageManager.hpp
 	g++ -Wall -c main.cpp
-
 Wall.o: Wall.cpp Wall.hpp
 	g++ -Wall -c Wall.cpp
-
 WalkableTile.o: WalkableTile.cpp WalkableTile.hpp
 	g++ -Wall -c WalkableTile.cpp
-
 Map.o: Map.cpp Map.hpp 
 	g++ -Wall -c Map.cpp
-
 Hero.o: Hero.cpp Hero.hpp constants.hpp
 	g++ -Wall -c Hero.cpp
-
 Tile.o: Tile.cpp Tile.hpp
 	g++ -Wall -c Tile.cpp
-
 ImageManager.o: ImageManager.cpp ImageManager.hpp
 	g++ -Wall -c ImageManager.cpp
-
 Collision.o: Collision.cpp Collision.hpp
 	g++ -Wall -c Collision.cpp
-
 Entity.o: Entity.cpp Entity.hpp
 	g++ -Wall -c Entity.cpp
 
+#MAIN build rule
 kalec: main.cpp $(OBJS)
 	g++ $(LCFLAGS) -Wall -o kalec $(OBJS) 
 
