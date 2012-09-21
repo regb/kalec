@@ -40,9 +40,9 @@ Entity.o: Entity.cpp Entity.hpp
 	g++ -Wall -c Entity.cpp
 
 #MAIN build rule
-kalec: main.cpp $(OBJS)
-	g++ $(LCFLAGS) -Wall -o kalec $(OBJS) 
+kalec: $(OBJS)
+	g++ -Wall -o kalec $(OBJS) $(LCFLAGS)
 
 .PHONY: clean
 clean:
-	rm kalec $(OBJS)
+	for obj in kalec $(OBJS); do if [ -f $$obj ]; then  rm $$obj; fi; done
