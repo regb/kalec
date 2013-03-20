@@ -8,7 +8,7 @@
 
 #define ASSERT(expr) \
   if(!(expr)) {\
-    std::cerr << "Assertion violation in file " << __FILE__ << " and line " << __LINE__ << std::endl;\
+    std::cerr << "Assertion violation in file " << __FILE__ << " and line " << __LINE__ << ": " << #expr << std::endl;\
     exit(-1);\
   }
 
