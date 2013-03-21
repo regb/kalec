@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifndef NASSERT
 
@@ -35,7 +36,7 @@
 #ifndef NDEBUG
 #define TRACE(fmt, ...) \
   fprintf(stdout, "%s:%d:%s(): " fmt "\n", __FILE__, \
-          __LINE__, __func__, __VA_ARGS__);
+          __LINE__, __func__, ##__VA_ARGS__);
 #else
 #define TRACE(fmt, ...) (void);
 #endif

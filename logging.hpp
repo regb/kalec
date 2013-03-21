@@ -15,14 +15,14 @@
 
 #define INFO(fmt, ...) \
   fprintf(LOG_OUT, "[INFO] %s:%d:%s(): " fmt "\n", __FILE__, \
-          __LINE__, __func__, __VA_ARGS__);
+          __LINE__, __func__, ##__VA_ARGS__);
 
 #define WARNING(fmt, ...) \
   fprintf(LOG_OUT, "[WARNING] %s:%d:%s(): " fmt "\n", __FILE__, \
-          __LINE__, __func__, __VA_ARGS__);
+          __LINE__, __func__, ##__VA_ARGS__);
 
 #define ERROR(fmt, ...) \
   fprintf(LOG_OUT, "[ERROR] %s:%d:%s(): " fmt "\n", __FILE__, \
-          __LINE__, __func__, __VA_ARGS__);
+          __LINE__, __func__, ##__VA_ARGS__);
 
 #endif
