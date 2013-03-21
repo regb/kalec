@@ -1,9 +1,9 @@
 UNAME = $(shell uname)
 
 ifeq ($(UNAME), Linux)
-LCFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS=-lsfml-graphics -lsfml-window -lsfml-system
 else ifeq ($(UNAME), Darwin)
-LCFLAGS=-framework sfml-graphics -framework sfml-window -framework sfml-system
+LDFLAGS=-framework sfml-graphics -framework sfml-window -framework sfml-system
 endif
 
 CFLAGS= -Wall
@@ -27,8 +27,7 @@ depend:
 
 #MAIN build rule
 kalec: $(OBJS)
-	$(CC) $(CFLAGS) -o kalec $(OBJS) $(LCFLAGS)
-
+	$(CC) -o kalec $(CFLAGS) $^ $(LDFLAGS)
 .PHONY: clean
 clean:
 	for obj in kalec $(OBJS); do if [ -f $$obj ]; then  rm $$obj; fi; done
