@@ -6,43 +6,31 @@ else ifeq ($(UNAME), Darwin)
 LCFLAGS=-framework sfml-graphics -framework sfml-window -framework sfml-system
 endif
 
-OBJS = main.o Wall.o WalkableTile.o Map.o Hero.o ImageManager.o Tile.o Entity.o Collision.o
+CFLAGS= -Wall
+
+SOURCES = $(shell find . -name "*.cpp")
+HEADERS = $(shell find . -name "*.hpp")
+OBJS = $(patsubst %.cpp,%.o,$(SOURCES))
+
+CC = g++
 
 .DEFAULT_GOAL = kalec
 
 #Just in case .DEFAULT_GOAL is not supported
 all: kalec
 
-Hero.hpp: Entity.hpp Collision.hpp
-Map.hpp: Tile.hpp Entity.hpp ImageManager.hpp Wall.hpp WalkableTile.hpp constants.hpp
-WalkableTile.hpp: Tile.hpp
-Wall.hpp: Tile.hpp
-Tile.hpp: ImageManager.hpp
-Collision.hpp: Map.hpp Tile.hpp constants.hpp
+depend:
+	$(CC) $(CFLAGS) -MM $(SOURCES) $(HEADERS) > Makefile.deps
 
-main.o: main.cpp Entity.hpp Hero.hpp Map.hpp Tile.hpp ImageManager.hpp
-	g++ -Wall -c main.cpp
-Wall.o: Wall.cpp Wall.hpp
-	g++ -Wall -c Wall.cpp
-WalkableTile.o: WalkableTile.cpp WalkableTile.hpp
-	g++ -Wall -c WalkableTile.cpp
-Map.o: Map.cpp Map.hpp 
-	g++ -Wall -c Map.cpp
-Hero.o: Hero.cpp Hero.hpp constants.hpp
-	g++ -Wall -c Hero.cpp
-Tile.o: Tile.cpp Tile.hpp
-	g++ -Wall -c Tile.cpp
-ImageManager.o: ImageManager.cpp ImageManager.hpp
-	g++ -Wall -c ImageManager.cpp
-Collision.o: Collision.cpp Collision.hpp
-	g++ -Wall -c Collision.cpp
-Entity.o: Entity.cpp Entity.hpp
-	g++ -Wall -c Entity.cpp
+%.o: %.cpp
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 #MAIN build rule
 kalec: $(OBJS)
-	g++ -Wall -o kalec $(OBJS) $(LCFLAGS)
+	$(CC) $(CFLAGS) -o kalec $(OBJS) $(LCFLAGS)
 
 .PHONY: clean
 clean:
 	for obj in kalec $(OBJS); do if [ -f $$obj ]; then  rm $$obj; fi; done
+
+-include Makefile.deps
