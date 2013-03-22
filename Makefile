@@ -6,7 +6,7 @@ else ifeq ($(UNAME), Darwin)
 LDFLAGS=-framework sfml-graphics -framework sfml-window -framework sfml-system
 endif
 
-CFLAGS= -Wall
+CFLAGS= -Wall -g
 
 SOURCES = $(shell find . -name "*.cpp")
 HEADERS = $(shell find . -name "*.hpp")
