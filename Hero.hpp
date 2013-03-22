@@ -1,5 +1,5 @@
-#ifndef _HERO_
-#define _HERO_
+#ifndef H_HERO
+#define H_HERO
 
 #include <SFML/Graphics.hpp>
 

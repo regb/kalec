@@ -1,5 +1,5 @@
-#ifndef _LOGGING_
-#define _LOGGING_
+#ifndef H_LOGGING
+#define H_LOGGING
 
 /*
  * Logging is different from debugging.

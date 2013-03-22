@@ -1,5 +1,5 @@
-#ifndef _WALKABLETILE_
-#define _WALKABLETILE_
+#ifndef H_WALKABLETILE
+#define H_WALKABLETILE
 
 #include "Tile.hpp"
 

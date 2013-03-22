@@ -1,5 +1,5 @@
-#ifndef _IMAGEMANAGER_
-#define _IMAGEMANAGER_
+#ifndef H_IMAGEMANAGER
+#define H_IMAGEMANAGER
 
 #include <iostream>
 #include <SFML/Graphics.hpp>

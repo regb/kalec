@@ -1,5 +1,5 @@
-#ifndef _TILE_
-#define _TILE_
+#ifndef H_TILE
+#define H_TILE
 
 #include <SFML/Graphics.hpp>
 

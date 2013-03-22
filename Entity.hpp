@@ -1,5 +1,5 @@
-#ifndef _ENTITY_
-#define _ENTITY_
+#ifndef H_ENTITY
+#define H_ENTITY
 
 #include <SFML/Graphics.hpp>
 

@@ -1,5 +1,5 @@
-#ifndef _COLLISION_
-#define _COLLISION_
+#ifndef H_COLLISION
+#define H_COLLISION
 
 #include "Map.hpp"
 #include "Tile.hpp"

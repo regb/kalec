@@ -1,5 +1,5 @@
-#ifndef _CONSTANTS_
-#define _CONSTANTS_
+#ifndef H_CONSTANTS
+#define H_CONSTANTS
 
 namespace constants {
 	const float GRAVITY = 400.f;

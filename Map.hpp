@@ -1,5 +1,5 @@
-#ifndef _MAP_
-#define _MAP_
+#ifndef H_MAP
+#define H_MAP
 
 #include <istream>
 #include <SFML/Graphics.hpp>

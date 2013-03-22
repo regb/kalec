@@ -1,5 +1,5 @@
-#ifndef _WALL_
-#define _WALL_
+#ifndef H_WALL
+#define H_WALL
 
 #include "Tile.hpp"
 
