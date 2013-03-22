@@ -4,6 +4,14 @@ This is the official repository for the Kalec project.
 Kalec is a platform-RPG 2D video game. More info will be
 available soon.
 
+##Quickstart
+
+First install the SFML library. Then:
+
+    make depend
+    make
+    ./kalec
+
 ##Why using an archaic language like C++
 
 This is a reasonnable question. Despite all its flaws and unexpected
